@@ -1,0 +1,19 @@
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: $spacing-sm;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+p {
+  margin-bottom: $spacing-unit;
+  font-size: $font-size-base;
+}
+
+a {
+  color: $primary-main;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

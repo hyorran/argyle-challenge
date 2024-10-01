@@ -1,0 +1,12 @@
+.button {
+  padding: $spacing-sm $spacing-lg;
+  background-color: $primary-main;
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($primary-main, 10%);
+  }
+}

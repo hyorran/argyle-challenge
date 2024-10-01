@@ -1,0 +1,45 @@
+@import '@/components/styles/variables/spacing';
+@import '@/components/styles/variables/pallete';
+@import '@/components/styles/variables/variables';
+
+$toolbar-height: 64px;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: 575.98px) {
+      @content;
+    }
+  }
+}
+
+.nav-container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: $toolbar-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $spacing-xl;
+  background-color: $white-main;
+  z-index: 50;
+  border-bottom: $spacing-xxs solid $grey-lighter;
+
+  @include respond-to(xs) {
+    padding: $spacing-m $spacing-xl;
+  }
+}
+
+.section {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 3.2rem;
+  
+  @include respond-to(xs) {
+    width: 13.1rem;
+    height: 2.4rem;
+  }
+}
