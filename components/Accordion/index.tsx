@@ -12,7 +12,10 @@ interface StyledAccordionProps {
 
 const StyledAccordion: React.FC<StyledAccordionProps> = ({ items }) => {
   return (
-    <Accordion width="100%">
+    <Accordion
+      width="100%"
+      data-testid="accordion"
+    >
       {items?.map((item, index) => (
         <AccordionItem key={index}>
           <h2>

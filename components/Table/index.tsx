@@ -13,7 +13,7 @@ interface StyledTableProps {
 
 const StyledTable: React.FC<StyledTableProps> = ({ caption, headers, data }) => {
   return (
-    <TableContainer>
+    <TableContainer data-testid="table">
       <Table variant="simple">
         <TableCaption>{caption}</TableCaption>
         <Thead>
