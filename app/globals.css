@@ -1,40 +1,41 @@
 html {
-    font-size: 100%;
+  font-size: 100%;
 }
 
 body {
-    font-family: 'Roboto-Regular', sans-serif;
-    background-color: #DEEFED;
-    color: #424242;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
+  font-family: "Roboto-Regular", sans-serif;
+  background-color: #deefed;
+  color: #424242;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 img {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
-#root, .app {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+#root,
+.app {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
-
 
 *,
 *::before,
 *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }

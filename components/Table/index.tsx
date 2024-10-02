@@ -1,14 +1,14 @@
-import React from 'react';
-import { Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
+import React from "react"
+import { Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from "@chakra-ui/react"
 
 interface TableData {
-  [key: string]: string | number;
+  [key: string]: string | number
 }
 
 interface StyledTableProps {
-  caption: string;
-  headers: { label: string; isNumeric?: boolean }[];
-  data: TableData[];
+  caption: string
+  headers: { label: string; isNumeric?: boolean }[]
+  data: TableData[]
 }
 
 const StyledTable: React.FC<StyledTableProps> = ({ caption, headers, data }) => {
@@ -19,7 +19,10 @@ const StyledTable: React.FC<StyledTableProps> = ({ caption, headers, data }) => 
         <Thead>
           <Tr>
             {headers.map((header, index) => (
-              <Th key={index} isNumeric={header.isNumeric}>
+              <Th
+                key={index}
+                isNumeric={header.isNumeric}
+              >
                 {header.label}
               </Th>
             ))}
@@ -29,7 +32,10 @@ const StyledTable: React.FC<StyledTableProps> = ({ caption, headers, data }) => 
           {data?.map((row, rowIndex) => (
             <Tr key={rowIndex}>
               {headers.map((header, colIndex) => (
-                <Td key={colIndex} isNumeric={header.isNumeric}>
+                <Td
+                  key={colIndex}
+                  isNumeric={header.isNumeric}
+                >
                   {row[header.label]}
                 </Td>
               ))}
@@ -39,7 +45,10 @@ const StyledTable: React.FC<StyledTableProps> = ({ caption, headers, data }) => 
         <Tfoot>
           <Tr>
             {headers.map((header, index) => (
-              <Th key={index} isNumeric={header.isNumeric}>
+              <Th
+                key={index}
+                isNumeric={header.isNumeric}
+              >
                 {header.label}
               </Th>
             ))}
@@ -47,7 +56,7 @@ const StyledTable: React.FC<StyledTableProps> = ({ caption, headers, data }) => 
         </Tfoot>
       </Table>
     </TableContainer>
-  );
-};
+  )
+}
 
-export default StyledTable;
+export default StyledTable
