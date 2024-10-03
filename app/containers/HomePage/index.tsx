@@ -13,20 +13,12 @@ import {
   Divider
 } from "@chakra-ui/react"
 
-function HomePage({ posts, users }: IHomePageProps) {
-  const postsPerUser = React.useMemo(
-    () =>
-      users?.map((user) => {
-        const postsFromUser = posts?.filter((post) => post.userId === user.id)
-        return {
-          userId: user.id,
-          posts: postsFromUser
-        }
-      }),
-    [posts, users]
-  )
+function HomePage({ posts: initialPosts, users, handleDeletePost }: IHomePageProps) {
+  const [postsPerUser, setPostsPerUser] = React.useState(initialPosts)
 
-  console.warn("postsPerUser", postsPerUser)
+  React.useMemo(() => {
+    setPostsPerUser(initialPosts)
+  }, [initialPosts])
 
   return (
     <div
@@ -70,12 +62,12 @@ function HomePage({ posts, users }: IHomePageProps) {
                       }}
                     >
                       {postsPerUser
-                        .find((item) => item.userId === user.id)
+                        ?.find((item) => item.userId === user.id)
                         ?.posts?.map((post) => {
                           return (
                             <div key={post.id}>
                               <Divider />
-                              <button onClick={() => console.warn("delete: ", post.id)}>delete</button>
+                              <button onClick={() => handleDeletePost(post.id)}>delete</button>
                               <p>title: {post.title}</p>
                               <p>content: {post.body}</p>
                             </div>

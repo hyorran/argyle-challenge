@@ -5,6 +5,11 @@ export interface IPosts {
   userId: number
 }
 
+export interface IPostsPerUsers {
+  posts: IPosts[] | undefined
+  userId: number
+}
+
 export interface IGeoLocalization {
   lat: string
   lng: string
@@ -36,6 +41,8 @@ export interface IUsers {
 }
 
 export interface IHomePageProps {
-  posts: IPosts[]
-  users: IUsers[]
+  posts?: IPostsPerUsers[] | undefined
+  users?: IUsers[] | undefined
+  handleDeletePost: (postId: number) => void
+  loading: boolean
 }
