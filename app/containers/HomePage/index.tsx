@@ -13,7 +13,7 @@ import {
   Divider
 } from "@chakra-ui/react"
 
-function HomePage({ posts: initialPosts, users, handleDeletePost }: IHomePageProps) {
+function HomePage({ posts: initialPosts, users, handleDeletePost, handleInsertPost }: IHomePageProps) {
   const [postsPerUser, setPostsPerUser] = React.useState(initialPosts)
 
   React.useMemo(() => {
@@ -52,7 +52,7 @@ function HomePage({ posts: initialPosts, users, handleDeletePost }: IHomePagePro
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <button onClick={() => console.warn("add: ", user.id)}>add</button>
+                  <button onClick={() => handleInsertPost(user.id)}>add</button>
                   {isExpanded && (
                     <div
                       style={{
