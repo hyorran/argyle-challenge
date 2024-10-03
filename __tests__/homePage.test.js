@@ -4,7 +4,7 @@ import "@testing-library/jest-dom"
 import { HomePage } from "../app/containers/HomePage"
 
 // jest.mock("@/components", () => ({
-//   Accordion: ({ items }) => (
+//   AccordionItem: ({ items }) => (
 //     <div data-testid="accordion">
 //       {items.map((item, index) => (
 //         <div key={index}>

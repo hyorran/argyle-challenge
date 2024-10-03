@@ -2,6 +2,6 @@ import { Navbar } from "./Navbar"
 import { Footer } from "./Footer"
 import { Layout } from "./Layout"
 import Table from "./Table"
-import Accordion from "./Accordion"
+import AccordionItem from "./AccordionItem"
 
-export { Navbar, Footer, Layout, Table, Accordion }
+export { Navbar, Footer, Layout, Table, AccordionItem }

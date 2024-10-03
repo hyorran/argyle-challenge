@@ -1,49 +1,94 @@
 "use client"
 
 import "./_page.scss"
-import { Accordion, Table } from "@/components"
+import { IHomePageProps } from "./types"
+import React from "react"
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Divider
+} from "@chakra-ui/react"
 
-const headers = [{ label: "To convert" }, { label: "into" }, { label: "multiply by", isNumeric: true }]
+function HomePage({ posts, users }: IHomePageProps) {
+  const postsPerUser = React.useMemo(
+    () =>
+      users?.map((user) => {
+        const postsFromUser = posts?.filter((post) => post.userId === user.id)
+        return {
+          userId: user.id,
+          posts: postsFromUser
+        }
+      }),
+    [posts, users]
+  )
 
-const conversionData = [
-  { "To convert": "inches", into: "millimetres (mm)", "multiply by": 25.4 },
-  { "To convert": "feet", into: "centimetres (cm)", "multiply by": 30.48 },
-  { "To convert": "yards", into: "metres (m)", "multiply by": 0.91444 }
-]
+  console.warn("postsPerUser", postsPerUser)
 
-const accordionItems = [
-  {
-    title: "Section 1 title",
-    content: (
-      <div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <button>Click Me</button>
-      </div>
-    )
-  },
-  {
-    title: "Section 2 title",
-    content: (
-      <div>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-      </div>
-    )
-  }
-]
-
-function HomePage() {
   return (
     <div
       style={{
         width: "100%"
       }}
     >
-      <Accordion items={accordionItems} />
-      <Table
-        caption="Imperial to metric conversion factors"
-        headers={headers}
-        data={conversionData}
-      />
+      <Accordion
+        width="100%"
+        data-testid="accordion"
+        allowMultiple
+      >
+        {users?.map((user) => (
+          <AccordionItem
+            key={user.id}
+            id={user.id.toString()}
+            style={{ border: "1px solid green" }}
+          >
+            {({ isExpanded }) => (
+              <>
+                <h2>
+                  <AccordionButton>
+                    <Box
+                      as="div"
+                      flex="1"
+                      textAlign="left"
+                    >
+                      {user.name}
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <button onClick={() => console.warn("add: ", user.id)}>add</button>
+                  {isExpanded && (
+                    <div
+                      style={{
+                        border: "1px solid red",
+                        overflow: "scroll",
+                        maxHeight: 300
+                      }}
+                    >
+                      {postsPerUser
+                        .find((item) => item.userId === user.id)
+                        ?.posts?.map((post) => {
+                          return (
+                            <div key={post.id}>
+                              <Divider />
+                              <button onClick={() => console.warn("delete: ", post.id)}>delete</button>
+                              <p>title: {post.title}</p>
+                              <p>content: {post.body}</p>
+                            </div>
+                          )
+                        })}
+                    </div>
+                  )}
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+        ))}
+      </Accordion>
     </div>
   )
 }
