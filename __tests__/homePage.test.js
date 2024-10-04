@@ -1,59 +1,93 @@
 import React from "react"
-import { render, screen } from "@testing-library/react"
-import "@testing-library/jest-dom"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { HomePage } from "../app/containers/HomePage"
+import { ChakraProvider } from "@chakra-ui/react"
+import useSWR from "swr"
 
-// jest.mock("@/components", () => ({
-//   AccordionItem: ({ items }) => (
-//     <div data-testid="accordion">
-//       {items.map((item, index) => (
-//         <div key={index}>
-//           <h2>{item.title}</h2>
-//           <div>{item.content}</div>
-//         </div>
-//       ))}
-//     </div>
-//   ),
-//   Table: ({ caption, headers, data }) => (
-//     <div data-testid="table">
-//       <caption>{caption}</caption>
-//       <thead>
-//         <tr>
-//           {headers.map((header, index) => (
-//             <th key={index}>{header.label}</th>
-//           ))}
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {data.map((row, index) => (
-//           <tr key={index}>
-//             {headers.map((header, headerIndex) => (
-//               <td key={headerIndex}>{row[header.label]}</td>
-//             ))}
-//           </tr>
-//         ))}
-//       </tbody>
-//     </div>
-//   )
-// }))
+// Mock the SWR hook and fetcher
+jest.mock("swr", () => ({
+  __esModule: true,
+  default: jest.fn()
+}))
 
-describe("HomePage", () => {
-  it("renders the accordion with correct titles", () => {
-    render(<HomePage />)
+const mockSWR = useSWR
+
+// Mock the useDisclosure hook from Chakra UI
+jest.mock("@chakra-ui/hooks", () => ({
+  useDisclosure: () => ({
+    isOpen: false,
+    onOpen: jest.fn(),
+    onClose: jest.fn()
+  })
+}))
+
+const mockUsers = [
+  { id: 1, name: "User 1" },
+  { id: 2, name: "User 2" }
+]
+
+const mockPosts = [
+  {
+    userId: 1,
+    posts: [
+      { id: 101, title: "Post 1", body: "Content of post 1" },
+      { id: 102, title: "Post 2", body: "Content of post 2" }
+    ]
+  },
+  {
+    userId: 2,
+    posts: [{ id: 103, title: "Post 3", body: "Content of post 3" }]
+  }
+]
+
+const renderComponent = (props = {}) => {
+  const defaultProps = {
+    posts: mockPosts,
+    users: mockUsers,
+    handleDeletePost: jest.fn(),
+    handleInsertPost: jest.fn()
+  }
+
+  return render(
+    <ChakraProvider>
+      <HomePage
+        {...defaultProps}
+        {...props}
+      />
+    </ChakraProvider>
+  )
+}
+
+describe("HomePage Component", () => {
+  beforeEach(() => {
+    // Reset mock before each test
+    mockSWR.mockReturnValue({
+      data: null,
+      isLoading: false
+    })
+  })
+
+  test("renders accordion and users", () => {
+    renderComponent()
 
     const accordion = screen.getByTestId("accordion")
     expect(accordion).toBeInTheDocument()
 
-    expect(screen.getByText("Section 1 title")).toBeInTheDocument()
-    expect(screen.getByText("Section 2 title")).toBeInTheDocument()
+    const user1 = screen.getByText("User 1")
+    const user2 = screen.getByText("User 2")
+    expect(user1).toBeInTheDocument()
+    expect(user2).toBeInTheDocument()
   })
 
-  it("renders the table with the correct headers and data", () => {
-    render(<HomePage />)
+  test("renders posts for a user when accordion is expanded", () => {
+    renderComponent()
 
-    const table = screen.getByTestId("table")
-    expect(table).toBeInTheDocument()
+    const user1Button = screen.getByText("User 1")
+    fireEvent.click(user1Button)
 
-    expect(screen.getByText("Imperial to metric conversion factors")).toBeInTheDocument()
+    const post1 = screen.getByText("Post 1")
+    const post2 = screen.getByText("Post 2")
+    expect(post1).toBeInTheDocument()
+    expect(post2).toBeInTheDocument()
   })
 })
