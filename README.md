@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Hello, thanks for the opportunity to take the challenge!
 
-## Getting Started
+Here are some points about what I did with the project:
 
-First, run the development server:
+- Decided to go with NextJs just as the standard now days, could also have started the project with Vite
+- Chakrai-UI, free and easy to use library to cut the need of creation simple components, also provides a good way of
+  customization, even tho i decided to use it "as-is", if i had more time to invest would definitely create a more
+  visual appealing app
+    - In a real world project, would have created the components by myself with SASS, those libraries tend to change too
+      much and has some limitations on what can be customized
+- SWR, just caching and revalidating data from requests instead of going with just the "fetch"
+    - For this project in specific for a professional application I would go with something more robust like React-Query
+      so we can have more control about the data coming from BE and also better optimization for both the requests and
+      the organization of our code.
+- Standard Jest/Testing-library for unit tests, created only a simple test for the HomePage as it takes time to create
+  those unit tests and didn't have that much time now
+- ESLint/Prettier - no words, required in every project I work on
+- I like to have well segregated my components from my pages and containers but using SWR hook to fetch data it kinda
+  mixes the usability of containers
+- Would have put more time in tests, but in my opinion it's something that really takes time to make something good and
+  I think unit tests should be an incremental thing within the project, not just create it once and never touches again
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+I think it covers the most important things from my side, probably forgetting about something, but hopefully we can talk
+about it soon!
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Thanks,
+Hyorran Preigschadt
