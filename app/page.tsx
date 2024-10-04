@@ -15,6 +15,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Skeleton,
   useToast
 } from "@chakra-ui/react"
 import { Form } from "@/components"
@@ -25,8 +26,14 @@ const API_USERS = "https://jsonplaceholder.typicode.com/users"
 export default function Home() {
   const [postsPerUser, setPostsPerUser] = React.useState<IPostsPerUsers[]>()
   const [allPosts, setAllPosts] = React.useState<IPosts[]>([])
-  const [formData, setFormData] = React.useState({})
+  const [formData, setFormData] = React.useState({
+    id: -1,
+    userId: -1,
+    body: "",
+    title: ""
+  })
   const { isOpen, onOpen, onClose } = useDisclosure()
+
   const toast = useToast()
 
   const { data: users } = useSWR<IUsers[]>(API_USERS, fetcher)
@@ -52,6 +59,13 @@ export default function Home() {
     await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
       method: "DELETE"
     }).then(() => {
+      toast({
+        title: "Post removed.",
+        description: "We've successfully deleted.",
+        status: "success",
+        duration: 3000,
+        isClosable: true
+      })
       // did this just to update visually when removing a post 2
       setAllPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId))
     })
@@ -59,22 +73,26 @@ export default function Home() {
 
   const handleInsertPost = (userId: number) => {
     setFormData({
+      body: "",
+      id: 0,
+      title: "",
       userId
     })
     onOpen()
   }
 
   const handleCloseModal = () => {
-    setFormData({})
+    setFormData({ body: "", id: 0, title: "", userId: -1 })
     onClose()
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
     const tempData = {
-      ...formData,
+      userId: formData.userId,
+      id: Math.random(),
       title: event.currentTarget.elements.title.value,
-      content: event.currentTarget.elements.content.value
+      body: event.currentTarget.elements.content.value
     }
 
     await fetch("https://jsonplaceholder.typicode.com/posts", {
@@ -85,11 +103,12 @@ export default function Home() {
       }
     })
       .then(() => {
+        setAllPosts((prevPosts) => [...prevPosts, tempData])
         toast({
-          title: "Account created.",
-          description: "We've created your account for you.",
+          title: "Post added.",
+          description: "We've successfully created the post.",
           status: "success",
-          duration: 9000,
+          duration: 3000,
           isClosable: true
         })
       })
@@ -104,13 +123,15 @@ export default function Home() {
         width: "100%"
       }}
     >
-      <HomePage
-        posts={postsPerUser}
-        users={users}
-        handleDeletePost={handleDeletePost}
-        handleInsertPost={handleInsertPost}
-        loading={isLoading}
-      />
+      <Skeleton isLoaded={!isLoading}>
+        <HomePage
+          posts={postsPerUser}
+          users={users}
+          handleDeletePost={handleDeletePost}
+          handleInsertPost={handleInsertPost}
+          loading={isLoading}
+        />
+      </Skeleton>
       <Modal
         isOpen={isOpen}
         onClose={handleCloseModal}
@@ -119,7 +140,7 @@ export default function Home() {
         <ModalOverlay />
         <ModalContent>
           <form onSubmit={handleSubmit}>
-            <ModalHeader>Modal Title</ModalHeader>
+            <ModalHeader>New Post</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <Form />
@@ -127,13 +148,18 @@ export default function Home() {
 
             <ModalFooter>
               <Button
-                colorScheme="blue"
+                colorScheme="teal"
                 mr={3}
                 type="submit"
               >
                 Submit
               </Button>
-              <Button variant="ghost">Cancel</Button>
+              <Button
+                variant="ghost"
+                onClick={onClose}
+              >
+                Cancel
+              </Button>
             </ModalFooter>
           </form>
         </ModalContent>

@@ -40,9 +40,9 @@ export interface IUsers {
   address: IAddress
 }
 
-export interface IHomePageProps {
-  posts?: IPostsPerUsers[] | undefined
-  users?: IUsers[] | undefined
-  handleDeletePost: (postId: number) => void
-  loading: boolean
+export interface ICommentsPosts {
+  id: number
+  body: string
+  email: string
+  name: string
 }

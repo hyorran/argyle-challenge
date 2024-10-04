@@ -1,9 +1,9 @@
 import React from "react"
-import { FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react"
+import { FormControl, FormLabel, Input, Stack, Textarea } from "@chakra-ui/react"
 
 const StyledForm = () => {
   return (
-    <>
+    <Stack>
       <FormControl>
         <FormLabel>Title</FormLabel>
         <Input
@@ -13,12 +13,9 @@ const StyledForm = () => {
       </FormControl>
       <FormControl>
         <FormLabel>Content</FormLabel>
-        <Textarea
-          placeholder="Here is a sample placeholder"
-          id="content"
-        />
+        <Textarea id="content" />
       </FormControl>
-    </>
+    </Stack>
   )
 }
 
